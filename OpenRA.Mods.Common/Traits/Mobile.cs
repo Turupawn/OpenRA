@@ -332,6 +332,8 @@ namespace OpenRA.Mods.Common.Traits
 		CPos fromCell, toCell;
 		public SubCell FromSubCell, ToSubCell;
 
+public List<Target>targetz=new List<Target>();
+
 		[Sync] public int Facing
 		{
 			get { return facing; }
@@ -492,6 +494,7 @@ namespace OpenRA.Mods.Common.Traits
 
 		void PerformMoveInner(Actor self, CPos targetLocation, bool queued)
 		{
+
 			var currentLocation = NearestMoveableCell(targetLocation);
 
 			if (!CanEnterCell(currentLocation))
@@ -511,9 +514,14 @@ namespace OpenRA.Mods.Common.Traits
 		protected void PerformMove(Actor self, CPos targetLocation, bool queued)
 		{
 			if (queued)
+{
 				self.QueueActivity(new CallFunc(() => PerformMoveInner(self, targetLocation, true)));
+}
 			else
+{
+targetz.Clear();
 				PerformMoveInner(self, targetLocation, false);
+}
 
 Color color;
 if(queued)
@@ -523,7 +531,10 @@ else
 //Console.WriteLine(self.QueueActivity.First());
 
 var currentLocation = NearestMoveableCell(targetLocation);
-			self.SetTargetLine(Target.FromCell(self.World, currentLocation), color);
+			//self.SetTargetLine(Target.FromCell(self.World, currentLocation), color);
+
+targetz.Add(Target.FromCell(self.World, currentLocation));
+self.SetTargetLines(targetz, color);
 
 
 		}
@@ -608,6 +619,12 @@ var currentLocation = NearestMoveableCell(targetLocation);
 
 		public void FinishedMoving(Actor self)
 		{
+if(targetz.Count()>0 && self == this.self)
+{
+//xxx
+//Console.WriteLine("Save me");
+//targetz.Remove(targetz.First());
+}
 			// Only make actor crush if it is on the ground
 			if (!self.IsAtGroundLevel())
 				return;

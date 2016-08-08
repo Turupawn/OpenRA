@@ -173,7 +173,9 @@ namespace OpenRA.Mods.Common.Activities
 
 			var nextCell = PopPath(self);
 			if (nextCell == null)
+{
 				return this;
+}
 
 			var firstFacing = self.World.Map.FacingBetween(mobile.FromCell, nextCell.Value.First, mobile.Facing);
 			if (firstFacing != mobile.Facing)
@@ -212,8 +214,15 @@ namespace OpenRA.Mods.Common.Activities
 
 		Pair<CPos, SubCell>? PopPath(Actor self)
 		{
+
 			if (path.Count == 0)
+{
+Console.WriteLine(self.GetHashCode());
+if(mobile.targetz.Count()>0)
+mobile.targetz.Remove(mobile.targetz.First());
+//Console.WriteLine("Killz me nao");
 				return null;
+}
 
 			var nextCell = path[path.Count - 1];
 

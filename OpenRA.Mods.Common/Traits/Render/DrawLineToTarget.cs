@@ -35,10 +35,10 @@ namespace OpenRA.Mods.Common.Traits
 
 		public void SetTarget(Actor self, Target target, Color c, bool display)
 		{
-if(targets==null || c==Color.Green)
+//if(targets==null || c==Color.Green)
 			targets = new List<Target> { target };
-else
-  targets.Add(target);
+//else
+//targets.Add(target);
 			this.c = c;
 
 			if (display)
@@ -101,9 +101,16 @@ yield return new TargetLineRenderable(casino, c);
 	{
 		public static void SetTargetLines(this Actor self, List<Target> targets, Color color)
 		{
-			var line = self.TraitOrDefault<DrawLineToTarget>();
-			if (line != null)
-				self.World.AddFrameEndTask(w => line.SetTargets(self, targets, color, false));
+			//var line = self.TraitOrDefault<DrawLineToTarget>();
+			//if (line != null)
+			//	self.World.AddFrameEndTask(w => line.SetTargets(self, targets, color, false));
+//foreach (var target in targets)
+//{
+//self.SetTargetLine(target, color, true);
+//}
+var line = self.TraitOrDefault<DrawLineToTarget>();
+if (line != null)
+line.SetTargets(self, targets, color, true);
 		}
 
 		public static void SetTargetLine(this Actor self, Target target, Color color)
