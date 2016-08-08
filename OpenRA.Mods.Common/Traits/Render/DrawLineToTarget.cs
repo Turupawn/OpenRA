@@ -35,7 +35,10 @@ namespace OpenRA.Mods.Common.Traits
 
 		public void SetTarget(Actor self, Target target, Color c, bool display)
 		{
+if(targets==null || c==Color.Green)
 			targets = new List<Target> { target };
+else
+  targets.Add(target);
 			this.c = c;
 
 			if (display)
@@ -72,13 +75,19 @@ namespace OpenRA.Mods.Common.Traits
 			if (targets == null || targets.Count == 0)
 				yield break;
 
+List<WPos>casino=new List<WPos>();
+casino.Add(self.CenterPosition);
+
+
+
 			foreach (var target in targets)
 			{
 				if (target.Type == TargetType.Invalid)
 					continue;
-
-				yield return new TargetLineRenderable(new[] { self.CenterPosition, target.CenterPosition }, c);
+casino.Add(target.CenterPosition);
+				//yield return new TargetLineRenderable(new[] { self.CenterPosition, target.CenterPosition }, c);
 			}
+yield return new TargetLineRenderable(casino, c);
 		}
 
 		public void OnBecomingIdle(Actor a)

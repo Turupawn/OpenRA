@@ -506,7 +506,6 @@ namespace OpenRA.Mods.Common.Traits
 
 			self.QueueActivity(new Move(self, currentLocation, WDist.FromCells(8)));
 
-			self.SetTargetLine(Target.FromCell(self.World, currentLocation), Color.Green);
 		}
 
 		protected void PerformMove(Actor self, CPos targetLocation, bool queued)
@@ -515,6 +514,18 @@ namespace OpenRA.Mods.Common.Traits
 				self.QueueActivity(new CallFunc(() => PerformMoveInner(self, targetLocation, true)));
 			else
 				PerformMoveInner(self, targetLocation, false);
+
+Color color;
+if(queued)
+  color = Color.Yellow;
+else
+  color= Color.Green;
+//Console.WriteLine(self.QueueActivity.First());
+
+var currentLocation = NearestMoveableCell(targetLocation);
+			self.SetTargetLine(Target.FromCell(self.World, currentLocation), color);
+
+
 		}
 
 		public void ResolveOrder(Actor self, Order order)
