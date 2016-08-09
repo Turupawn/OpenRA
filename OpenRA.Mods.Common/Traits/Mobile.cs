@@ -332,7 +332,7 @@ namespace OpenRA.Mods.Common.Traits
 		CPos fromCell, toCell;
 		public SubCell FromSubCell, ToSubCell;
 
-public List<Target>waypoint_targets=new List<Target>();//pinoy
+		public List<Target> WaypointTargets = new List<Target>();
 
 		[Sync] public int Facing
 		{
@@ -507,8 +507,6 @@ public List<Target>waypoint_targets=new List<Target>();//pinoy
 			TicksBeforePathing = AverageTicksBeforePathing + self.World.SharedRandom.Next(-SpreadTicksBeforePathing, SpreadTicksBeforePathing);
 
 			self.QueueActivity(new Move(self, currentLocation, WDist.FromCells(8)));
-
-			//self.SetTargetLine(Target.FromCell(self.World, currentLocation), Color.Green);//pinoy
 		}
 
 		protected void PerformMove(Actor self, CPos targetLocation, bool queued)
@@ -516,15 +514,14 @@ public List<Target>waypoint_targets=new List<Target>();//pinoy
 			if (queued)
 				self.QueueActivity(new CallFunc(() => PerformMoveInner(self, targetLocation, true)));
 			else
-{//pinoy
-waypoint_targets.Clear();//pinoy
+			{
+				WaypointTargets.Clear();
 				PerformMoveInner(self, targetLocation, false);
-}//pinoy
+			}
 
-var currentLocation = NearestMoveableCell(targetLocation);//pinoy
-waypoint_targets.Add(Target.FromCell(self.World, currentLocation));//pinoy
-self.SetTargetLines(waypoint_targets, Color.Green);//pinoy
-
+			var currentLocation = NearestMoveableCell(targetLocation);
+			WaypointTargets.Add(Target.FromCell(self.World, currentLocation));
+			self.SetTargetLines(WaypointTargets, Color.Green);
 		}
 
 		public void ResolveOrder(Actor self, Order order)

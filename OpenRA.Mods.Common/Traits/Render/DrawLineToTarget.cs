@@ -72,21 +72,18 @@ namespace OpenRA.Mods.Common.Traits
 			if (targets == null || targets.Count == 0)
 				yield break;
 
-List<WPos>valid_targets=new List<WPos>();//Pinoy
-valid_targets.Add(self.CenterPosition);//Pinoy
+			List<WPos> valid_targets = new List<WPos>();
+			valid_targets.Add(self.CenterPosition);
 
 			foreach (var target in targets)
 			{
 				if (target.Type == TargetType.Invalid)
 					continue;
 
-valid_targets.Add(target.CenterPosition);//Pinoy
-
-				//yield return new TargetLineRenderable(new[] { self.CenterPosition, target.CenterPosition }, c);//Pinoy
+					valid_targets.Add(target.CenterPosition);
 			}
 
-yield return new TargetLineRenderable(valid_targets, c);//Pinoy
-
+			yield return new TargetLineRenderable(valid_targets, c);
 		}
 
 		public void OnBecomingIdle(Actor a)
@@ -100,12 +97,10 @@ yield return new TargetLineRenderable(valid_targets, c);//Pinoy
 	{
 		public static void SetTargetLines(this Actor self, List<Target> targets, Color color)
 		{
-			//var line = self.TraitOrDefault<DrawLineToTarget>();//pinoy
-			//if (line != null)//pinoy
-				//self.World.AddFrameEndTask(w => line.SetTargets(self, targets, color, false));//pinoy
-var line = self.TraitOrDefault<DrawLineToTarget>();//pinoy
-if (line != null)//pinoy
-line.SetTargets(self, targets, color, true);//pinoy
+			var line = self.TraitOrDefault<DrawLineToTarget>();
+			if (line != null)
+				line.SetTargets(self, targets, color, true);
+				// self.World.AddFrameEndTask(w => line.SetTargets(self, targets, color, false));
 		}
 
 		public static void SetTargetLine(this Actor self, Target target, Color color)

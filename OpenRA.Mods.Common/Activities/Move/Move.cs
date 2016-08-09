@@ -213,11 +213,11 @@ namespace OpenRA.Mods.Common.Activities
 		Pair<CPos, SubCell>? PopPath(Actor self)
 		{
 			if (path.Count == 0)
-{//pinoy
-if(mobile.waypoint_targets.Count()>0)//pinoy
-mobile.waypoint_targets.Remove(mobile.waypoint_targets.First());//pinoy
+			{
+				if (mobile.WaypointTargets.Count() > 0)
+				mobile.WaypointTargets.Remove(mobile.WaypointTargets.First());
 				return null;
-}//pinoy
+			}
 
 			var nextCell = path[path.Count - 1];
 
